@@ -1,17 +1,14 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthProvider'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
-import { ContactsProvider } from './contexts/ContactsProvider'
-import { ChatsProvider } from './contexts/ChatsProvider';
 import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
 import NotFound from './components/NotFound';
 import './App.css'
 
 function App() {
-  return (<AuthProvider>
+  return (
     <div>
       <Routes>
         <Route element={<Layout />}>
@@ -20,11 +17,7 @@ function App() {
             path="/"
             element={
               <RequireAuth>
-                <ContactsProvider >
-                  <ChatsProvider >
-                    <Dashboard />
-                  </ChatsProvider>
-                </ContactsProvider>
+                <Dashboard />
               </RequireAuth>
             }
           />
@@ -33,7 +26,7 @@ function App() {
 
       </Routes>
     </div>
-  </AuthProvider>)
+  )
 }
 
 export default App;

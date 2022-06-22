@@ -1,10 +1,11 @@
 import React from 'react'
-import { useContacts } from '../contexts/ContactsProvider';
 import { FaTrashAlt } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../reducers/contactsSlice';
 
 export default function ContactList() {
-  const { contacts, deleteContact } = useContacts();
-
+  const contacts = useSelector(state => state.contacts)
+  const dispatch = useDispatch();
   return (
     <div>
       {contacts.map(contact => (
@@ -15,7 +16,7 @@ export default function ContactList() {
           </div>
 
           <div className='contact-item-buttons-container'>
-            <button onClick={() => deleteContact(contact.email)} className="delete-button" >
+            <button onClick={() => dispatch(deleteContact(contact.email))} className="delete-button" >
               <FaTrashAlt />
             </button>
           </div>

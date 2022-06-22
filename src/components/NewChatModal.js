@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
-import { useChats } from '../contexts/ChatsProvider';
-import { useContacts } from '../contexts/ContactsProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { createChat } from '../reducers/chatsSlice';
 
 export default function NewChatModal({ closeModal }) {
   const [selectedContactEmails, setSelectedContactEmails] = useState([])
 
-  const { createChat } = useChats()
-  const { contacts } = useContacts()
+  const dispatch = useDispatch()
+
+  const contacts = useSelector(state => state.contacts)
 
 
   function handleSubmit(e) {
     e.preventDefault()
     if (selectedContactEmails.length > 0) {
-      createChat(selectedContactEmails)
+      dispatch(createChat(selectedContactEmails))
       setSelectedContactEmails([])
     }
     e.target.reset()

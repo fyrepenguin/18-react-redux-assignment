@@ -1,17 +1,16 @@
 import React from 'react'
 import Sidebar from './Sidebar';
 import Chat from './Chat';
-import { useChats } from '../contexts/ChatsProvider';
-import { useAuth } from '../contexts/AuthProvider';
+import { useSelector } from 'react-redux';
 
 export default function Dashboard() {
-  const { selectedChat } = useChats()
-  const auth = useAuth()
+  const { selected, data } = useSelector(state => state.chats)
+  const auth = useSelector(state => state.auth)
 
   return (
     <div className='dashboard'>
       <Sidebar email={auth.email} />
-      {selectedChat && <Chat />}
+      {data[selected] && <Chat />}
     </div>
   )
 }

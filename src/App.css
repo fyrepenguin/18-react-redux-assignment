@@ -163,7 +163,7 @@ button.modal-open {
   cursor: pointer;
   text-decoration: none;
   padding: 22px 22px;
-  color: #424242;
+  color: #fff;
   font-weight: 800;
   transition: all .5s ease-in-out;
   z-index: +1;
@@ -179,6 +179,7 @@ button.modal-open {
 
 .modal-content h3 {
   padding: 20px;
+  margin: 0;
   display: block;
   text-align: center;
   border-bottom: 1px solid #e0e0e0;

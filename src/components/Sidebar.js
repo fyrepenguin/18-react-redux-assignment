@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ChatList from './ChatList'
 import ContactList from './ContactList'
 import NewContactModal from './NewContactModal'
 import NewChatModal from './NewChatModal'
-import { useAuth } from '../contexts/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../reducers/authSlice'
 
 const CHATS_KEY = 'chats'
 const CONTACTS_KEY = 'contacts'
 
 export default function Sidebar({ email }) {
-  let auth = useAuth();
+  const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch()
   let navigate = useNavigate();
 
   const [activeKey, setActiveKey] = useState(CHATS_KEY)
@@ -20,6 +22,11 @@ export default function Sidebar({ email }) {
   function closeModal() {
     setModalOpen(false)
   }
+
+  useEffect(() => {
+    !auth.email && navigate("/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth])
 
   return (
     <div className='sidebar' >
@@ -45,7 +52,7 @@ export default function Sidebar({ email }) {
           Your Email: <span className="account-info__email">{email}</span>
         </span>   <button
           onClick={() => {
-            auth.logout(() => navigate("/login"));
+            dispatch(logout())
           }}
         >
           logout

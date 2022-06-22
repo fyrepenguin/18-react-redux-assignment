@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useContacts } from '../contexts/ContactsProvider';
+import { useDispatch } from 'react-redux';
+import { createContact } from '../reducers/contactsSlice';
 
 export default function NewContactModal({ closeModal }) {
   const [firstName, setFirstName] = useState('');
@@ -7,13 +8,13 @@ export default function NewContactModal({ closeModal }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
 
-  const { createContact } = useContacts();
+  const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
     // validation needs to be updated with regex for email/phone number
     if (firstName.length > 0 && email.length > 0) {
-      createContact({ email, firstName, lastName, phoneNumber })
+      dispatch(createContact({ email, firstName, lastName, phoneNumber }))
       closeModal()
     }
     if (firstName.length === 0) {

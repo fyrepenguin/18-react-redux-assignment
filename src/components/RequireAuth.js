@@ -1,8 +1,8 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from '../contexts/AuthProvider';
+import { useSelector } from 'react-redux';
 
 export default function RequireAuth({ children }) {
-  let auth = useAuth();
+  let auth = useSelector(state => state.auth);
   let location = useLocation();
 
   if (!auth.email) {

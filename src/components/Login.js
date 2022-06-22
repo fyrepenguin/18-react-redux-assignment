@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../reducers/authSlice';
 
 export default function Login() {
   let navigate = useNavigate();
   let location = useLocation();
-  let auth = useAuth();
+  const dispatch = useDispatch()
+  const auth = useSelector(state => state.auth);
   let from = location.state?.from?.pathname || "/";
 
   function handleSubmit(e) {
     e.preventDefault()
     let formData = new FormData(e.currentTarget);
     let email = formData.get("email");
-    auth.login(email, () => {
-      navigate(from, { replace: true });
-    });
+    dispatch(login(email))
 
   }
 
@@ -22,11 +22,14 @@ export default function Login() {
 
     let formData = new FormData(e.currentTarget);
     let email = formData.get("email");
-    auth.login(email, () => {
-      navigate(from, { replace: true });
-    });
+    dispatch(login(email))
 
   }
+  useEffect(() => {
+    auth.email && navigate(from, { replace: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth])
+
 
   return (
     <div className="login-container">
